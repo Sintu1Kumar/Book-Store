@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useFirebase } from "../Context/Firebase";
 
 function Register() {
   const firebase = useFirebase();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (firebase.isLoggedIn) {
+      // navigate to home
+      navigate("/");
+    }
+  }, [firebase, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
